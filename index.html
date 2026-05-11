@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Feiertags- & Fastenkalender</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Smooth fade for elements */
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="text-gray-800 min-h-screen pb-12">
+
+    <div class="bg-gradient-to-r from-indigo-600 via-blue-600 to-blue-500 text-white pb-32 pt-14 px-4 shadow-xl">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-3 drop-shadow-sm">Universal Kalender</h1>
+            <p class="text-indigo-100 text-lg opacity-90 font-medium">Feiertage, Fastenzeiten & Brauchtum entdecken</p>
+        </div>
+    </div>
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl -mt-24">
+
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-8 mb-8">
+
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                <div class="text-center sm:text-left">
+                    <h2 class="text-lg font-bold text-gray-800">Filter & Einstellungen</h2>
+                    <p class="text-sm text-gray-500">Wählen Sie das Jahr und Kategorien</p>
+                </div>
+
+                <div class="relative w-full sm:w-auto">
+                    <select id="year-select" class="appearance-none bg-gray-50 border border-gray-200 text-gray-900 text-lg font-semibold rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-5 pr-12 py-3 shadow-sm transition-all hover:border-indigo-300 cursor-pointer">
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-gray-100 mb-6">
+
+            <div class="flex flex-wrap gap-2 md:gap-3 justify-center sm:justify-start">
+
+                <label class="cursor-pointer group relative">
+                    <input type="checkbox" id="filter-legal" class="peer sr-only" checked>
+                    <div class="px-4 py-2.5 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-50 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 peer-checked:border-indigo-200 peer-checked:shadow-md peer-focus:ring-2 peer-focus:ring-indigo-500 peer-focus:ring-offset-2 select-none flex items-center">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gray-300 mr-2.5 transition-colors peer-checked:bg-indigo-600 group-hover:bg-gray-400"></span>
+                        Gesetzlich
+                    </div>
+                </label>
+
+                <label class="cursor-pointer group relative">
+                    <input type="checkbox" id="filter-catholic" class="peer sr-only">
+                    <div class="px-4 py-2.5 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-50 peer-checked:bg-blue-50 peer-checked:text-blue-700 peer-checked:border-blue-200 peer-checked:shadow-md peer-focus:ring-2 peer-focus:ring-blue-500 peer-focus:ring-offset-2 select-none flex items-center">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gray-300 mr-2.5 transition-colors peer-checked:bg-blue-600 group-hover:bg-gray-400"></span>
+                        Katholisch
+                    </div>
+                </label>
+
+                <label class="cursor-pointer group relative">
+                    <input type="checkbox" id="filter-protestant" class="peer sr-only">
+                    <div class="px-4 py-2.5 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-50 peer-checked:bg-blue-50 peer-checked:text-blue-700 peer-checked:border-blue-200 peer-checked:shadow-md peer-focus:ring-2 peer-focus:ring-blue-500 peer-focus:ring-offset-2 select-none flex items-center">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gray-300 mr-2.5 transition-colors peer-checked:bg-blue-600 group-hover:bg-gray-400"></span>
+                        Evangelisch
+                    </div>
+                </label>
+
+                <label class="cursor-pointer group relative">
+                    <input type="checkbox" id="filter-orthodox" class="peer sr-only">
+                    <div class="px-4 py-2.5 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-50 peer-checked:bg-cyan-50 peer-checked:text-cyan-700 peer-checked:border-cyan-200 peer-checked:shadow-md peer-focus:ring-2 peer-focus:ring-cyan-500 peer-focus:ring-offset-2 select-none flex items-center">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gray-300 mr-2.5 transition-colors peer-checked:bg-cyan-600 group-hover:bg-gray-400"></span>
+                        Orthodox
+                    </div>
+                </label>
+
+                <label class="cursor-pointer group relative">
+                    <input type="checkbox" id="filter-jewish" class="peer sr-only">
+                    <div class="px-4 py-2.5 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-50 peer-checked:bg-purple-50 peer-checked:text-purple-700 peer-checked:border-purple-200 peer-checked:shadow-md peer-focus:ring-2 peer-focus:ring-purple-500 peer-focus:ring-offset-2 select-none flex items-center">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gray-300 mr-2.5 transition-colors peer-checked:bg-purple-600 group-hover:bg-gray-400"></span>
+                        Jüdisch
+                    </div>
+                </label>
+
+                <label class="cursor-pointer group relative">
+                    <input type="checkbox" id="filter-islamic" class="peer sr-only">
+                    <div class="px-4 py-2.5 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-50 peer-checked:bg-emerald-50 peer-checked:text-emerald-700 peer-checked:border-emerald-200 peer-checked:shadow-md peer-focus:ring-2 peer-focus:ring-emerald-500 peer-focus:ring-offset-2 select-none flex items-center">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gray-300 mr-2.5 transition-colors peer-checked:bg-emerald-600 group-hover:bg-gray-400"></span>
+                        Islamisch
+                    </div>
+                </label>
+
+                <label class="cursor-pointer group relative">
+                    <input type="checkbox" id="filter-iranian" class="peer sr-only">
+                    <div class="px-4 py-2.5 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-50 peer-checked:bg-amber-50 peer-checked:text-amber-700 peer-checked:border-amber-200 peer-checked:shadow-md peer-focus:ring-2 peer-focus:ring-amber-500 peer-focus:ring-offset-2 select-none flex items-center">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gray-300 mr-2.5 transition-colors peer-checked:bg-amber-600 group-hover:bg-gray-400"></span>
+                        Iranisch
+                    </div>
+                </label>
+
+                <label class="cursor-pointer group relative">
+                    <input type="checkbox" id="filter-cultural" class="peer sr-only">
+                    <div class="px-4 py-2.5 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-50 peer-checked:bg-pink-50 peer-checked:text-pink-700 peer-checked:border-pink-200 peer-checked:shadow-md peer-focus:ring-2 peer-focus:ring-pink-500 peer-focus:ring-offset-2 select-none flex items-center">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gray-300 mr-2.5 transition-colors peer-checked:bg-pink-600 group-hover:bg-gray-400"></span>
+                        Kultur
+                    </div>
+                </label>
+
+                <div class="h-8 w-px bg-gray-200 mx-2 hidden md:block"></div>
+
+                <label class="cursor-pointer group relative">
+                    <input type="checkbox" id="filter-minor-fasting" class="peer sr-only">
+                    <div class="px-3 py-2.5 rounded-lg border border-dashed border-gray-300 bg-transparent text-gray-500 text-xs font-semibold uppercase tracking-wide transition-all duration-200 ease-in-out hover:bg-gray-50 hover:text-gray-700 peer-checked:bg-red-50 peer-checked:text-red-700 peer-checked:border-red-200 peer-checked:border-solid peer-checked:shadow-sm select-none flex items-center">
+                        <svg class="w-3.5 h-3.5 mr-1.5 opacity-50 peer-checked:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        + Kleine Fastentage
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div id="holidays-container" class="space-y-4"></div>
+
+        <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl shadow-sm border border-gray-100 fade-in">
+            <div class="inline-block p-4 rounded-full bg-gray-50 mb-3">
+                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            </div>
+            <p class="text-gray-500 font-medium">Keine Tage für diese Auswahl gefunden.</p>
+            <p class="text-sm text-gray-400 mt-1">Aktivieren Sie weitere Filter oben.</p>
+        </div>
+
+        <div id="footnotes" class="mt-8 p-6 bg-blue-50/50 rounded-xl border border-blue-100/50 hidden text-sm text-gray-600 fade-in"></div>
+    </div>
+
+    <!-- BEGINN LIBRARY CODE -->
+    <script>
+    /**
+     * Universal Holiday & Calendar Library v1.3
+     */
+
+    // =============================================================================
+    // 1. DEUTSCHE GESETZES-KONFIGURATION (The Rules)
+    // =============================================================================
+
+    const GERMAN_LEGAL_CONFIG = {
+        // --- Staatliche Feiertage ---
+        'neujahr': { isLegal: true, scope: 'Bundesweit', isSilent: false, isTradingHoliday: true },
+        'tag_der_arbeit': { isLegal: true, scope: 'Bundesweit', isSilent: false, isTradingHoliday: true },
+        'tag_der_deutschen_einheit': { isLegal: true, scope: 'Bundesweit', isSilent: false, isTradingHoliday: true },
+
+        // Dynamisch: Internationaler Frauentag
+        'frauentag': (year) => {
+            if (year >= 2023) return { isLegal: true, scope: 'Regional', states: 'BE, MV', isSilent: false, isTradingHoliday: false };
+            if (year >= 2019) return { isLegal: true, scope: 'Regional', states: 'BE', isSilent: false, isTradingHoliday: false };
+            return { isLegal: false, scope: 'Kein Feiertag', states: '', isSilent: false, isTradingHoliday: false };
+        },
+
+        // Dynamisch: Tag der Befreiung
+        'tag_der_befreiung': (year) => {
+            if (year === 2025 || year === 2020) {
+                return { isLegal: true, scope: 'Regional (Einmalig)', states: 'BE', isSilent: false, isTradingHoliday: false };
+            }
+            return { isLegal: false, scope: 'Gedenktag', states: '', isSilent: false, isTradingHoliday: false };
+        },
+
+        'augsburger_friedensfest': { isLegal: true, scope: 'Lokal (Augsburg)', states: 'BY (Augsburg)', isSilent: false, isTradingHoliday: false },
+        'weltkindertag': (year) => {
+            if (year >= 2019) return { isLegal: true, scope: 'Regional', states: 'TH', isSilent: false, isTradingHoliday: false };
+            return { isLegal: false, scope: 'Gedenktag', states: '', isSilent: false, isTradingHoliday: false };
+        },
+
+        // --- Christliche Feiertage ---
+        'karfreitag': { isLegal: true, scope: 'Bundesweit', isSilent: true, isTradingHoliday: true },
+        'ostermontag': { isLegal: true, scope: 'Bundesweit', isSilent: false, isTradingHoliday: true },
+        'christi_himmelfahrt': { isLegal: true, scope: 'Bundesweit', isSilent: false, isTradingHoliday: false },
+        'pfingstmontag': { isLegal: true, scope: 'Bundesweit', isSilent: false, isTradingHoliday: true },
+        '1_weihnachtstag': { isLegal: true, scope: 'Bundesweit', isSilent: false, isTradingHoliday: true },
+        '2_weihnachtstag': { isLegal: true, scope: 'Bundesweit', isSilent: false, isTradingHoliday: true },
+
+        'ostersonntag': { isLegal: true, scope: 'Regional (BB)', states: 'BB', isSilent: true, isTradingHoliday: false },
+        'pfingstsonntag': { isLegal: true, scope: 'Regional (BB)', states: 'BB', isSilent: true, isTradingHoliday: false },
+
+        'heilige_drei_koenige': { isLegal: true, scope: 'Regional', states: 'BW, BY, ST', isSilent: false, isTradingHoliday: false },
+        'fronleichnam': { isLegal: true, scope: 'Regional', states: 'BW, BY, HE, NW, RP, SL', footnote: '* **', isSilent: false, isTradingHoliday: false },
+        'mariae_himmelfahrt': { isLegal: true, scope: 'Regional', states: 'SL, BY (Teile)', footnote: '***', isSilent: false, isTradingHoliday: false },
+        'allerheiligen': { isLegal: true, scope: 'Regional', states: 'BW, BY, NW, RP, SL', isSilent: true, isTradingHoliday: false },
+        'reformationstag': (year) => {
+            if (year === 2017) return { isLegal: true, scope: 'Bundesweit (500 Jahre)', isSilent: false, isTradingHoliday: true };
+            return { isLegal: true, scope: 'Regional', states: 'BB, HB, HH, MV, NI, SN, ST, SH, TH', isSilent: false, isTradingHoliday: false };
+        },
+        'buss_und_bettag': { isLegal: true, scope: 'Regional (SN)', states: 'SN', isSilent: true, isTradingHoliday: false },
+
+        // Stille Tage / Brauchtum
+        'aschermittwoch': { isLegal: false, scope: 'Brauchtum', isSilent: true, isTradingHoliday: false },
+        'heiligabend': { isLegal: false, scope: 'Stiller Tag / Bankfeiertag', isSilent: true, isTradingHoliday: true },
+        'volkstrauertag': { isLegal: false, scope: 'Gedenktag', isSilent: true, isTradingHoliday: false },
+        'totensonntag': { isLegal: false, scope: 'Gedenktag', isSilent: true, isTradingHoliday: false },
+        'silvester': { isLegal: false, scope: 'Jahreswechsel / Bankfeiertag', isSilent: false, isTradingHoliday: true },
+
+        // --- Jüdische Feiertage (Gesetzlich geschützt) ---
+        // Diese Tage sind i.d.R. keine arbeitsfreien Feiertage für alle, genießen aber Schutz (Freistellung/Lärmschutz).
+        'rosch_ha_schana_1': { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'rosch_ha_schana_2': { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'jom_kippur':        { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        
+        'sukkot_1':          { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'sukkot_2':          { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'schemini_azeret':   { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false }, // Sukkot Ende 1
+        'simchat_tora':      { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false }, // Sukkot Ende 2
+        
+        'pessach_1':         { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'pessach_2':         { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'pessach_7':         { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'pessach_8':         { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        
+        'schawuot_1':        { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'schawuot_2':        { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+
+
+        // --- Fallback ---
+        'DEFAULT': { isLegal: false, scope: 'Sonstige / Religiös', states: '', isSilent: false, isTradingHoliday: false }
+    };
+
+
+    // =============================================================================
+    // 2. KALENDER-UTILS & SYSTEME
+    // =============================================================================
+
+    class CalendarUtils {
+        static addDays(date, days) {
+            const result = new Date(date);
+            result.setUTCDate(result.getUTCDate() + days);
+            return result;
+        }
+
+        static getNthWeekdayOfMonth(year, month, weekday, n) {
+            const firstDayOfMonth = new Date(Date.UTC(year, month, 1));
+            let currentWeekday = firstDayOfMonth.getUTCDay();
+            let daysToAdd = (weekday - currentWeekday + 7) % 7;
+            daysToAdd += (n - 1) * 7;
+            return this.addDays(firstDayOfMonth, daysToAdd);
+        }
+
+        static getWesternEaster(year) {
+            const a = year % 19, b = year % 4, c = year % 7, k = Math.floor(year / 100),
+                p = Math.floor((13 + 8 * k) / 25), q = Math.floor(k / 4),
+                M = (15 - p + k - q) % 30, N = (4 + k - q) % 7,
+                d = (19 * a + M) % 30, e = (2 * b + 4 * c + 6 * d + N) % 7,
+                day = 22 + d + e;
+            return day > 31 ? new Date(Date.UTC(year, 3, day - 31)) : new Date(Date.UTC(year, 2, day));
+        }
+
+        static getOrthodoxEaster(year) {
+            const a = year % 4, b = year % 7, c = year % 19, d = (19 * c + 15) % 30;
+            const e = (2 * a + 4 * b - d + 34) % 7, dayOfMonth = d + e + 113;
+            const month = Math.floor(dayOfMonth / 31), day = (dayOfMonth % 31) + 1;
+            const orthodoxEasterJulian = new Date(Date.UTC(year, month - 1, day));
+            orthodoxEasterJulian.setUTCDate(orthodoxEasterJulian.getUTCDate() + 13);
+            return orthodoxEasterJulian;
+        }
+
+        static jdToGregorian(jd) {
+            const J = Math.floor(jd + 0.5), j = J + 32044, g = Math.floor(j / 146097), dg = j % 146097;
+            const c = Math.floor((Math.floor(dg / 36524) + 1) * 3 / 4), dc = dg - c * 36524;
+            const b = Math.floor(dc / 1461), db = dc % 1461, a = Math.floor((Math.floor(db / 365) + 1) * 3 / 4), da = db - a * 365;
+            const y = g * 400 + c * 100 + b * 4 + a, m = Math.floor((da * 5 + 308) / 153) - 2, d = da - Math.floor((m + 4) * 153 / 5) + 122;
+            const year = y - 4800 + Math.floor((m + 2) / 12), month = (m + 2) % 12 + 1, day = d + 1;
+            return new Date(Date.UTC(year, month - 1, day));
+        }
+    }
+
+    class HebrewCalendarSystem {
+        static isLeapYear(year) { return ((year * 7 + 1) % 19) < 7; }
+        static getYearLength(year) { return this.hebrewToJd(year + 1, 7, 1) - this.hebrewToJd(year, 7, 1); }
+        static hebrewToJd(year, month, day) {
+            const HEBREW_EPOCH = 347995.5;
+            const months = Math.floor((235 * year - 234) / 19), parts = 12084 + 13753 * months;
+            let days = months * 29 + Math.floor(parts / 25920), dayOfWeek = days % 7;
+            if (dayOfWeek === 2 || dayOfWeek === 4 || dayOfWeek === 6) { days++; }
+            if (dayOfWeek === 0 && this.isLeapYear(year) && months > 6) { days++; }
+            if (dayOfWeek === 1 && !this.isLeapYear(year - 1) && months > 5) { days++; }
+            let jd = HEBREW_EPOCH + days;
+            const isLeap = this.isLeapYear(year);
+            const getMonthDays = (y, m) => {
+                 if (m === 2 || m === 4 || m === 6 || m === 10 || m === 13) return 29;
+                 if (m === 12 && !this.isLeapYear(y)) return 29;
+                 if (m === 8 || m === 9) {
+                     const yearLen = this.getYearLength(y);
+                     const longHeshvan = yearLen % 10 === 5;
+                     const shortKislev = yearLen % 10 === 3;
+                     if (m === 8 && !longHeshvan) return 29;
+                     if (m === 9 && shortKislev) return 29;
+                 }
+                 return 30;
+            };
+            if (month < 7) {
+                for (let m = 7; m <= (isLeap ? 13 : 12); m++) jd += getMonthDays(year, m);
+                for (let m = 1; m < month; m++) jd += getMonthDays(year, m);
+            } else { for (let m = 7; m < month; m++) jd += getMonthDays(year, m); }
+            jd += day; return jd;
+        }
+        static convertToGregorian(hYear, hMonth, hDay) { return CalendarUtils.jdToGregorian(this.hebrewToJd(hYear, hMonth, hDay)); }
+    }
+
+    class IslamicCalendarSystem {
+        static islamicToJd(year, month, day) {
+            const ISLAMIC_EPOCH = 1948439.5;
+            return day + Math.ceil(29.5 * (month - 1)) + (year - 1) * 354 + Math.floor((3 + 11 * year) / 30) + ISLAMIC_EPOCH - 1;
+        }
+        static convertToGregorian(iYear, iMonth, iDay) { return CalendarUtils.jdToGregorian(this.islamicToJd(iYear, iMonth, iDay)); }
+        static findDateInGregorianYear(gYear, iMonth, iDay) {
+            let hYear = Math.round((gYear - 622) * 1.0307);
+            for (let i = -1; i <= 2; i++) {
+                let gDate = this.convertToGregorian(hYear + i, iMonth, iDay);
+                if (gDate.getUTCFullYear() === gYear) { return gDate; }
+            }
+            return null;
+        }
+    }
+
+    class PersianCalendarSystem {
+        // Konvertiert ein Jalali-Datum (jY, jM, jD) in ein gregorianisches Date-Objekt
+        static jalaliToGregorian(jY, jM, jD) {
+            let jy = jY - 979;
+            let jm = jM - 1;
+            let jd = jD - 1;
+
+            let j_day_no = 365 * jy + parseInt(jy / 33) * 8 + parseInt((jy % 33 + 3) / 4);
+            for (let i = 0; i < jm; ++i) j_day_no += (i < 6) ? 31 : 30;
+
+            let j_np = j_day_no + jd;
+            let g_day_no = j_np + 79;
+
+            let gy = 1600 + 400 * parseInt(g_day_no / 146097);
+            g_day_no = g_day_no % 146097;
+
+            let leap = true;
+            if (g_day_no >= 36525) {
+                g_day_no--;
+                gy += 100 * parseInt(g_day_no / 36524);
+                g_day_no = g_day_no % 36524;
+
+                if (g_day_no >= 365) {
+                    g_day_no++;
+                } else {
+                    leap = false;
+                }
+            }
+
+            gy += 4 * parseInt(g_day_no / 1461);
+            g_day_no %= 1461;
+
+            if (g_day_no >= 366) {
+                leap = false;
+                g_day_no--;
+                gy += parseInt(g_day_no / 365);
+                g_day_no = g_day_no % 365;
+            }
+
+            let i;
+            const days = [31, (leap ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            
+            for (i = 0; i < 12; i++) {
+                if (g_day_no < days[i]) break;
+                g_day_no -= days[i];
+            }
+            
+            return new Date(Date.UTC(gy, i, g_day_no + 1));
+        }
+
+        // Hilfsmethode: Findet ein persisches Datum im gegebenen gregorianischen Jahr
+        static findDateInGregorianYear(gYear, pMonth, pDay) {
+            // Das persische Jahr beginnt im März.
+            // Wenn wir z.B. Yalda (Monat 9) im Jahr 2025 suchen, ist das persisches Jahr 1404.
+            // Wenn wir Nowruz (Monat 1) im Jahr 2025 suchen, ist das persisches Jahr 1404.
+            
+            // Näherung: Gregorianisches Jahr - 621 = Persisches Jahr
+            let pYearBase = gYear - 621;
+            
+            // Wir prüfen pYearBase und pYearBase - 1, um sicherzugehen
+            for (let y = pYearBase - 1; y <= pYearBase + 1; y++) {
+                let date = this.jalaliToGregorian(y, pMonth, pDay);
+                if (date.getUTCFullYear() === gYear) {
+                    return date;
+                }
+            }
+            return null;
+        }
+    }
+
+    // =============================================================================
+    // 3. FEIERTAGE-PROVIDER (Datenlieferanten)
+    // =============================================================================
+
+    class BaseProvider { constructor(year) { this.year = year; } getHolidays() { return []; } }
+
+    class StateProvider extends BaseProvider {
+        getHolidays() {
+            return [
+                { name: 'Neujahr', date: new Date(Date.UTC(this.year, 0, 1)), key: 'neujahr', category: 'Staatlich' },
+                { name: 'Internationaler Frauentag', date: new Date(Date.UTC(this.year, 2, 8)), key: 'frauentag', category: 'Staatlich' },
+                { name: 'Tag der Arbeit', date: new Date(Date.UTC(this.year, 4, 1)), key: 'tag_der_arbeit', category: 'Staatlich' },
+                { name: 'Jahrestag der Befreiung', date: new Date(Date.UTC(this.year, 4, 8)), key: 'tag_der_befreiung', category: 'Staatlich' },
+                { name: 'Augsburger Hohes Friedensfest', date: new Date(Date.UTC(this.year, 7, 8)), key: 'augsburger_friedensfest', category: 'Staatlich' },
+                { name: 'Weltkindertag', date: new Date(Date.UTC(this.year, 8, 20)), key: 'weltkindertag', category: 'Staatlich' },
+                { name: 'Tag der Deutschen Einheit', date: new Date(Date.UTC(this.year, 9, 3)), key: 'tag_der_deutschen_einheit', category: 'Staatlich' },
+            ];
+        }
+    }
+
+    class ChristianGeneralProvider extends BaseProvider {
+        getHolidays() {
+            const easter = CalendarUtils.getWesternEaster(this.year);
+            return [
+                { name: 'Aschermittwoch', date: CalendarUtils.addDays(easter, -46), key: 'aschermittwoch', category: 'Christlich', isFasting: true, fastingLevel: 2 },
+                { name: 'Karfreitag', date: CalendarUtils.addDays(easter, -2), key: 'karfreitag', category: 'Christlich', isFasting: true, fastingLevel: 1 },
+                { name: 'Ostersonntag', date: easter, key: 'ostersonntag', category: 'Christlich' },
+                { name: 'Ostermontag', date: CalendarUtils.addDays(easter, 1), key: 'ostermontag', category: 'Christlich' },
+                { name: 'Christi Himmelfahrt', date: CalendarUtils.addDays(easter, 39), key: 'christi_himmelfahrt', category: 'Christlich' },
+                { name: 'Pfingstsonntag', date: CalendarUtils.addDays(easter, 49), key: 'pfingstsonntag', category: 'Christlich' },
+                { name: 'Pfingstmontag', date: CalendarUtils.addDays(easter, 50), key: 'pfingstmontag', category: 'Christlich' },
+                { name: 'Heiligabend', date: new Date(Date.UTC(this.year, 11, 24)), key: 'heiligabend', category: 'Christlich' },
+                { name: '1. Weihnachtstag', date: new Date(Date.UTC(this.year, 11, 25)), key: '1_weihnachtstag', category: 'Christlich' },
+                { name: '2. Weihnachtstag', date: new Date(Date.UTC(this.year, 11, 26)), key: '2_weihnachtstag', category: 'Christlich' },
+            ];
+        }
+    }
+
+    class ChristianCatholicProvider extends BaseProvider {
+        getHolidays() {
+            const easter = CalendarUtils.getWesternEaster(this.year);
+            return [
+                { name: 'Heilige Drei Könige', date: new Date(Date.UTC(this.year, 0, 6)), key: 'heilige_drei_koenige', category: 'Christlich' },
+                { name: 'Fronleichnam', date: CalendarUtils.addDays(easter, 60), key: 'fronleichnam', category: 'Christlich' },
+                { name: 'Mariä Himmelfahrt', date: new Date(Date.UTC(this.year, 7, 15)), key: 'mariae_himmelfahrt', category: 'Christlich' },
+                { name: 'Allerheiligen', date: new Date(Date.UTC(this.year, 10, 1)), key: 'allerheiligen', category: 'Christlich' },
+            ];
+        }
+    }
+
+    class ChristianProtestantProvider extends BaseProvider {
+        getHolidays() {
+            const nov22 = new Date(Date.UTC(this.year, 10, 22));
+            const bussOffset = (nov22.getUTCDay() - 3 + 7) % 7;
+            const bussTag = CalendarUtils.addDays(nov22, -bussOffset);
+            return [
+                { name: 'Reformationstag', date: new Date(Date.UTC(this.year, 9, 31)), key: 'reformationstag', category: 'Christlich' },
+                { name: 'Volkstrauertag', date: CalendarUtils.addDays(bussTag, -4), key: 'volkstrauertag', category: 'Staatlich' },
+                { name: 'Buß- und Bettag', date: bussTag, key: 'buss_und_bettag', category: 'Christlich' },
+                { name: 'Totensonntag', date: CalendarUtils.addDays(bussTag, 4), key: 'totensonntag', category: 'Christlich' }
+             ];
+        }
+    }
+
+    class OrthodoxProvider extends BaseProvider {
+        getHolidays() {
+            const easter = CalendarUtils.getOrthodoxEaster(this.year);
+            return [
+                { name: 'Orthodoxes Weihnachtsfest', date: new Date(Date.UTC(this.year, 0, 7)), key: 'orthodox_weihnachten', category: 'Orthodox' },
+                { name: 'Orthodoxer Karfreitag', date: CalendarUtils.addDays(easter, -2), key: 'orthodox_karfreitag', category: 'Orthodox', isFasting: true, fastingLevel: 1 },
+                { name: 'Orthodoxer Ostersonntag', date: easter, key: 'orthodox_ostersonntag', category: 'Orthodox' },
+                { name: 'Orthodoxer Ostermontag', date: CalendarUtils.addDays(easter, 1), key: 'orthodox_ostermontag', category: 'Orthodox' },
+            ];
+        }
+    }
+
+    class JewishProvider extends BaseProvider {
+        getHolidays() {
+            // Gesetzlich geschützte Tage in DE:
+            // Pessach (1., 2. und 7., 8. Tag)
+            // Wochenfest/Schawuot (2 Tage)
+            // Laubhüttenfest/Sukkot (1., 2. Tag)
+            // Schlussfest/Schemini Azeret & Simchat Tora (die "letzten zwei" von Sukkot)
+            // Neujahr/Rosch Haschana (2 Tage)
+            // Versöhnungstag/Jom Kippur (1 Tag)
+
+            const configs = [
+                // Pessach (1. Monat Nissan)
+                { name: 'Pessach (1. Tag)', month: 1, day: 15, key: 'pessach_1' },
+                { name: 'Pessach (2. Tag)', month: 1, day: 16, key: 'pessach_2' },
+                { name: 'Pessach (7. Tag)', month: 1, day: 21, key: 'pessach_7' },
+                { name: 'Pessach (8. Tag)', month: 1, day: 22, key: 'pessach_8' },
+
+                // Schawuot / Wochenfest (3. Monat Sivan)
+                { name: 'Schawuot (1. Tag)', month: 3, day: 6, key: 'schawuot_1' },
+                { name: 'Schawuot (2. Tag)', month: 3, day: 7, key: 'schawuot_2' },
+
+                // Rosch Haschana (7. Monat Tischri)
+                { name: 'Rosch ha-Schana (1. Tag)', month: 7, day: 1, key: 'rosch_ha_schana_1' },
+                { name: 'Rosch ha-Schana (2. Tag)', month: 7, day: 2, key: 'rosch_ha_schana_2' },
+
+                // Jom Kippur
+                { name: 'Jom Kippur', month: 7, day: 10, key: 'jom_kippur', isFasting: true, fastingLevel: 1 },
+
+                // Sukkot / Laubhüttenfest (7. Monat Tischri)
+                { name: 'Sukkot (1. Tag)', month: 7, day: 15, key: 'sukkot_1' },
+                { name: 'Sukkot (2. Tag)', month: 7, day: 16, key: 'sukkot_2' },
+
+                // Schlussfest (Direkt nach Sukkot)
+                { name: 'Schemini Azeret', month: 7, day: 22, key: 'schemini_azeret' },
+                { name: 'Simchat Tora', month: 7, day: 23, key: 'simchat_tora' },
+
+                // Weitere (Religiös, aber oft nicht explizit im Gesetzestext, aber Tradition)
+                { name: 'Chanukka (1. Tag)', month: 9, day: 25, key: 'chanukka' },
+                { name: 'Fasten Esther', month: 12, day: 13, key: 'fasten_esther', isFasting: true, fastingLevel: 2 },
+                { name: '17. Tammuz (Fasten)', month: 4, day: 17, key: '17_tammuz', isFasting: true, fastingLevel: 2 },
+                { name: 'Tisha B\'Av (Fasten)', month: 5, day: 9, key: 'tisha_b_av', isFasting: true, fastingLevel: 1 },
+            ];
+
+            return configs.map(c => {
+                let hYear = this.year + 3760;
+                let date = HebrewCalendarSystem.convertToGregorian(hYear, c.month, c.day);
+                // Korrektur, falls das hebräische Datum in ein anderes gregorianisches Jahr fällt
+                if (date.getUTCFullYear() < this.year || (date.getUTCFullYear() === this.year && date.getUTCMonth() > 8 && c.month < 7)) {
+                    hYear++; date = HebrewCalendarSystem.convertToGregorian(hYear, c.month, c.day);
+                } else if (date.getUTCFullYear() > this.year && c.month > 6) {
+                    hYear--; date = HebrewCalendarSystem.convertToGregorian(hYear, c.month, c.day);
+                }
+                // Verschiebung von Fastentagen, wenn sie auf Sabbat fallen (Ausnahme Jom Kippur)
+                if (['tisha_b_av', '17_tammuz', 'fasten_gedalja', 'fasten_esther'].includes(c.key) && date.getUTCDay() === 6) {
+                     // Esther wird vorverlegt, andere nach hinten (vereinfacht, hier meist +1, Esther müsste eigentlich -2 wenn Sabbat)
+                     // Um die Lib einfach zu halten, lassen wir die simple Verschiebung für Minor Fasts
+                     date = CalendarUtils.addDays(date, 1); 
+                }
+
+                return { name: c.name, date: date, key: c.key, category: 'Jüdisch', isFasting: !!c.isFasting, fastingLevel: c.fastingLevel || 0 };
+            });
+        }
+    }
+
+    class IslamicProvider extends BaseProvider {
+        getHolidays() {
+            const configs = [
+                { name: 'Islamisches Neujahr', month: 1, day: 1, key: 'islamisches_neujahr' },
+                { name: 'Aschura', month: 1, day: 10, key: 'aschura', isFasting: true, fastingLevel: 2 },
+                { name: 'Ramadan Beginn', month: 9, day: 1, key: 'ramadan_beginn', isFasting: true, fastingLevel: 1 },
+                { name: 'Eid al-Fitr', month: 10, day: 1, key: 'eid_al_fitr' },
+                { name: 'Eid al-Adha', month: 12, day: 10, key: 'eid_al_adha' },
+            ];
+            const holidays = [];
+            configs.forEach(c => {
+                const date = IslamicCalendarSystem.findDateInGregorianYear(this.year, c.month, c.day);
+                if (date) holidays.push({ name: c.name, date: date, key: c.key, category: 'Islamisch', isFasting: c.isFasting, fastingLevel: c.fastingLevel || 0 });
+            });
+            return holidays;
+        }
+    }
+
+    class IranianProvider extends BaseProvider {
+        getHolidays() {
+            const configs = [
+                // Frühlingsfeste
+                { name: 'Nowruz (Persisches Neujahr)', month: 1, day: 1, key: 'nowruz', category: 'Iranisch' },
+                { name: 'Sizdah Bedar (Tag der Natur)', month: 1, day: 13, key: 'sizdah_bedar', category: 'Iranisch' },
+            
+                // Sommerfeste
+                { name: 'Tirgan (Sommerfest)', month: 4, day: 13, key: 'tirgan', category: 'Iranisch' },
+            
+                // Herbstfeste
+                { name: 'Mehregan (Herbstfest)', month: 7, day: 16, key: 'mehregan', category: 'Iranisch' },
+            
+                // Winterfeste
+                { name: 'Shab-e Yalda (Yalda-Nacht)', month: 9, day: 30, key: 'yalda_nacht', category: 'Iranisch' },
+                { name: 'Jashn-e Sadeh (Fest des Feuers)', month: 11, day: 10, key: 'sadeh', category: 'Iranisch' }
+            ];
+
+            const holidays = [];
+   
+            // Standard-Daten hinzufügen
+            configs.forEach(c => {
+                const date = PersianCalendarSystem.findDateInGregorianYear(this.year, c.month, c.day);
+                if (date) {
+                    holidays.push({ 
+                        name: c.name, 
+                        date: date, 
+                        key: c.key, 
+                        category: c.category 
+                    });
+                }
+            });
+
+            // Sonderfall: Chaharshanbe Suri (Der Vorabend des letzten Mittwochs)
+            const nowruzDate = PersianCalendarSystem.findDateInGregorianYear(this.year, 1, 1);
+            if (nowruzDate) {
+                // 1. Finde den Wochentag von Nowruz (0=So, 1=Mo, ..., 3=Mi, ...)
+                const dayOfWeekNowruz = nowruzDate.getUTCDay();
+
+                // 2. Berechne den Abstand zum letzten Mittwoch vor Nowruz
+                // Wenn Nowruz ein Mittwoch ist, ist der "letzte Mittwoch" genau 7 Tage vorher.
+                let daysToLastWednesday = (dayOfWeekNowruz - 3 + 7) % 7;
+                if (daysToLastWednesday === 0) daysToLastWednesday = 7;
+
+                // 3. Gehe vom letzten Mittwoch einen weiteren Tag zurück auf den Dienstag
+                const suriDate = CalendarUtils.addDays(nowruzDate, -(daysToLastWednesday + 1));
+
+                holidays.push({
+                    name: 'Chaharshanbe Suri (Feuerfest)',
+                    date: suriDate,
+                    key: 'chaharshanbe_suri',
+                    category: 'Iranisch'
+                });
+            }
+
+            return holidays;
+        }
+    }
+
+
+    class CulturalProvider extends BaseProvider {
+        getHolidays() {
+            return [
+                { name: 'Valentinstag', date: new Date(Date.UTC(this.year, 1, 14)), key: 'valentinstag', category: 'Kulturell' },
+                { name: 'Muttertag', date: CalendarUtils.getNthWeekdayOfMonth(this.year, 4, 0, 2), key: 'muttertag', category: 'Kulturell' },
+                { name: 'Erntedankfest', date: CalendarUtils.getNthWeekdayOfMonth(this.year, 9, 0, 1), key: 'erntedankfest', category: 'Kulturell' },
+                { name: 'Halloween', date: new Date(Date.UTC(this.year, 9, 31)), key: 'halloween', category: 'Kulturell' },
+                { name: 'Nikolaus', date: new Date(Date.UTC(this.year, 11, 6)), key: 'nikolaus', category: 'Christlich' },
+                { name: 'Silvester', date: new Date(Date.UTC(this.year, 11, 31)), key: 'silvester', category: 'Kulturell' }
+            ];
+        }
+    }
+
+    // =============================================================================
+    // 4. HAUPTKLASSE
+    // =============================================================================
+
+    class UniversalHolidayLib {
+
+        static _applyGermanLaws(rawHoliday, year) {
+            let key = rawHoliday.key;
+            if (!key) {
+                 key = rawHoliday.name.toLowerCase()
+                    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+                    .replace(/[^a-z0-9]/g, '_');
+            }
+
+            let configEntry = GERMAN_LEGAL_CONFIG[key] || GERMAN_LEGAL_CONFIG['DEFAULT'];
+
+            if (typeof configEntry === 'function') {
+                configEntry = configEntry(year);
+            }
+
+            return {
+                ...rawHoliday,
+                ...configEntry
+            };
+        }
+
+        static getHolidays(year) {
+            const providers = [
+                new StateProvider(year),
+                new ChristianGeneralProvider(year),
+                new ChristianCatholicProvider(year),
+                new ChristianProtestantProvider(year),
+                new OrthodoxProvider(year),
+                new JewishProvider(year),
+                new IslamicProvider(year),
+                new IranianProvider(year),
+                new CulturalProvider(year)
+            ];
+
+            let allRaw = providers.flatMap(p => p.getHolidays());
+            const enrichedHolidays = allRaw.map(h => this._applyGermanLaws(h, year));
+            return enrichedHolidays.filter(h => h && h.date).sort((a, b) => a.date - b.date);
+        }
+
+        static get Utils() { return CalendarUtils; }
+        static get Providers() {
+            return { StateProvider, ChristianGeneralProvider, ChristianCatholicProvider, ChristianProtestantProvider, OrthodoxProvider, JewishProvider, IslamicProvider, IranianProvider, CulturalProvider };
+        }
+        static get Hebrew() { return HebrewCalendarSystem; }
+        static get Islamic() { return IslamicCalendarSystem; }
+    }
+    
+    // Global verfügbar machen
+    window.UniversalHolidayLib = UniversalHolidayLib;
+    </script>
+    <!-- END LIBRARY CODE -->
+
+    <script>
+        // Lokaler Provider für Korschenbroich (Bleibt erhalten)
+        class KorschenbroichProvider {
+            constructor(year) {
+                this.year = year;
+            }
+            getHolidays() {
+                const easter = UniversalHolidayLib.Utils.getWesternEaster(this.year);
+                const ungesPengsteDate = UniversalHolidayLib.Utils.addDays(easter, 49); // Pfingstsonntag
+                return [
+                    {
+                        name: 'Unges Pengste',
+                        date: ungesPengsteDate,
+                        category: 'Lokal (Korschenbroich)', // New property name compatible
+                        isLegal: false,
+                        isSilent: false,
+                        description: 'Traditionelles Schützenfest in Korschenbroich'
+                    }
+                ];
+            }
+        }
+
+        class HolidayCalendar {
+            constructor() {
+                this.yearSelect = document.getElementById('year-select');
+                this.container = document.getElementById('holidays-container');
+                this.footnotesContainer = document.getElementById('footnotes');
+                this.emptyState = document.getElementById('empty-state');
+
+                // Filters
+                this.filterLegal = document.getElementById('filter-legal');
+                this.filterCath = document.getElementById('filter-catholic');
+                this.filterProt = document.getElementById('filter-protestant');
+                this.filterOrth = document.getElementById('filter-orthodox');
+                this.filterJew = document.getElementById('filter-jewish');
+                this.filterIslam = document.getElementById('filter-islamic');
+                this.filterIranian = document.getElementById('filter-iranian'); // NEU
+                this.filterCult = document.getElementById('filter-cultural');
+                this.filterMinorFasting = document.getElementById('filter-minor-fasting');
+
+                this.init();
+            }
+
+            init() {
+                this.populateYearSelect();
+                this.bindEvents();
+                this.render();
+            }
+
+            populateYearSelect() {
+                const currentYear = new Date().getFullYear();
+                for (let year = currentYear - 5; year <= currentYear + 10; year++) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    if (year === currentYear) option.selected = true;
+                    this.yearSelect.appendChild(option);
+                }
+            }
+
+            bindEvents() {
+                const elements = [
+                    this.yearSelect, this.filterLegal, this.filterCath,
+                    this.filterProt, this.filterOrth, this.filterJew,
+                    this.filterIslam, this.filterIranian, this.filterCult, this.filterMinorFasting
+                ];
+                elements.forEach(el => el.addEventListener('change', () => this.render()));
+            }
+
+            render() {
+                const year = parseInt(this.yearSelect.value, 10);
+
+                // 1. Data Collection
+                let libHolidays = UniversalHolidayLib.getHolidays(year);
+                let localHolidays = new KorschenbroichProvider(year).getHolidays();
+                let allHolidays = [...libHolidays, ...localHolidays];
+
+                // 2. Filter Logic
+                const filteredHolidays = allHolidays.filter(h => {
+                    const category = h.category || '';
+                    const scope = h.scope || '';
+                    
+                    // Logic to map the lib properties to filterable concepts
+                    const isLegalOrTrading = h.isLegal || h.isTradingHoliday || scope === 'Bundesweit' || scope === 'Regional' || scope.includes('Lokal');
+                    const isCatholic = category.includes('Christlich') && (h.key === 'fronleichnam' || h.key === 'mariae_himmelfahrt' || h.key === 'allerheiligen' || h.key === 'heilige_drei_koenige');
+                    // Simple check: if category is Christlich but not specifically Protestant/Catholic handled above, treat as Catholic/General or Protestant depending on filter context? 
+                    // Better: The Lib doesn't strictly separate "Catholic" vs "Protestant" in the final object property 'category' (it's just 'Christlich').
+                    // We need to infer from keys or check strict category if Provider set it (Lib providers set 'Christlich' or 'Orthodox').
+                    // Actually, the Lib providers set: ChristianCatholicProvider -> category: 'Christlich'.
+                    // So we must rely on keys or assume general Christian are shown if either is checked?
+                    // Let's refine based on the provider logic embedded:
+                    // General -> Aschermittwoch, Karfreitag, Ostern, Himmelfahrt, Pfingsten, Weihnachten. (Relevant for both)
+                    
+                    let categoryActive = false;
+
+                    // Group 1: Legal/Trading
+                    if (this.filterLegal.checked && isLegalOrTrading) {
+                        categoryActive = true;
+                    }
+
+                    // Group 2: Specific Religious/Cultural Categories
+                    
+                    // Helper: Is this a general christian holiday?
+                    const isGeneralChristian = ['karfreitag', 'ostersonntag', 'ostermontag', 'christi_himmelfahrt', 'pfingstsonntag', 'pfingstmontag', 'heiligabend', '1_weihnachtstag', '2_weihnachtstag', 'nikolaus'].includes(h.key);
+                    const isCatholicSpecific = ['heilige_drei_koenige', 'fronleichnam', 'mariae_himmelfahrt', 'allerheiligen'].includes(h.key);
+                    const isProtestantSpecific = ['reformationstag', 'buss_und_bettag', 'totensonntag'].includes(h.key);
+
+                    if (this.filterCath.checked && (category === 'Christlich' && (isGeneralChristian || isCatholicSpecific))) categoryActive = true;
+                    if (this.filterProt.checked && (category === 'Christlich' && (isGeneralChristian || isProtestantSpecific))) categoryActive = true;
+                    
+                    if (this.filterOrth.checked && category.includes('Orthodox')) categoryActive = true;
+                    if (this.filterJew.checked && category.includes('Jüdisch')) categoryActive = true;
+                    if (this.filterIslam.checked && category.includes('Islamisch')) categoryActive = true;
+                    if (this.filterIranian.checked && category.includes('Iranisch')) categoryActive = true;
+                    if (this.filterCult.checked && (category.includes('Kulturell') || category.includes('Lokal') || category === 'Staatlich' && !h.isLegal)) categoryActive = true;
+
+                    // Exception: If something is legal but unchecked in legal filter, it might still show up if it matches a religious filter
+                    // Example: Christmas is Legal. If Legal is OFF but Catholic is ON, Christmas should appear.
+                    // The logic above sets categoryActive = true if ANY condition is met. That is correct (OR logic).
+
+                    if (!categoryActive) return false;
+
+                    // -- Fasting Logic --
+                    if (h.isFasting) {
+                        const level = h.fastingLevel || 0;
+                        if (level === 1) return true; // Major fasting always shown if category active
+                        if (level === 2) {
+                            return this.filterMinorFasting.checked;
+                        }
+                        return true;
+                    }
+
+                    return true;
+                });
+
+                // 3. Sorting
+                filteredHolidays.sort((a, b) => a.date - b.date);
+
+                // 4. Rendering
+                this.container.innerHTML = '';
+                this.footnotesContainer.innerHTML = '';
+
+                if (filteredHolidays.length === 0) {
+                    this.emptyState.classList.remove('hidden');
+                    this.footnotesContainer.classList.add('hidden');
+                    return;
+                }
+                this.emptyState.classList.add('hidden');
+
+                const dayNames = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+                const monthNames = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
+                let activeFootnotes = new Set();
+                const footnoteDefinitions = {
+                    '*': '<strong>*In Sachsen:</strong> Nur in bestimmten katholisch geprägten Gemeinden des sorbischen Siedlungsgebietes.',
+                    '**': '<strong>**In Thüringen:</strong> Nur in bestimmten Gemeinden im Landkreis Eichsfeld sowie Teilen des Unstrut-Hainich-Kreises und des Wartburgkreises.',
+                    '***': '<strong>***In Bayern:</strong> Nur in Gemeinden mit überwiegend katholischer Bevölkerung.'
+                };
+
+                filteredHolidays.forEach(h => {
+                    const day = h.date.getUTCDate();
+                    const dayName = dayNames[h.date.getUTCDay()];
+                    const monthName = monthNames[h.date.getUTCMonth()];
+
+                    // Determine Badge Text
+                    let badgeText = h.scope || h.category;
+                    if (h.isLegal) badgeText = h.scope; // Prefer scope (Bundesweit/Regional) for legal holidays
+                    if (!h.isLegal && h.category) badgeText = h.category; 
+
+                    // Styling
+                    let typeClass = "bg-gray-100 text-gray-600";
+                    let borderClass = "border-transparent";
+                    let iconColor = "bg-gray-50 text-gray-500 border-gray-200";
+
+                    const cat = h.category || '';
+
+                    if (h.isLegal || (h.scope && h.scope.includes('Bundesweit'))) {
+                        borderClass = "border-indigo-500";
+                        typeClass = "bg-indigo-50 text-indigo-700 font-medium";
+                        iconColor = "bg-indigo-50 text-indigo-600 border-indigo-100";
+                    } else if (cat.includes('Jüdisch')) {
+                        typeClass = "bg-purple-50 text-purple-700";
+                        iconColor = "bg-purple-50 text-purple-600 border-purple-100";
+                    } else if (cat.includes('Islamisch')) {
+                        typeClass = "bg-emerald-50 text-emerald-700";
+                        iconColor = "bg-emerald-50 text-emerald-600 border-emerald-100";
+                    } else if (cat.includes('Iranisch')) {
+                        typeClass = "bg-amber-50 text-amber-700";
+                        iconColor = "bg-amber-50 text-amber-600 border-amber-100";
+                    } else if (cat.includes('Orthodox')) {
+                        typeClass = "bg-cyan-50 text-cyan-700";
+                    } else if (cat.includes('Christlich')) {
+                        typeClass = "bg-blue-50 text-blue-700";
+                        iconColor = "bg-blue-50 text-blue-600 border-blue-100";
+                    }
+
+                    // Fasting Badge
+                    const isFastingVisible = h.isFasting && ((h.fastingLevel === 2 && this.filterMinorFasting.checked) || h.fastingLevel !== 2);
+                    const fastingBadge = isFastingVisible
+                        ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-100 text-red-800 ml-2 shadow-sm">FASTEN ${h.fastingLevel === 2 ? '(Klein)' : ''}</span>`
+                        : '';
+
+                    // Footnote Logic
+                    let displaySuffix = '';
+                    if (h.footnote) {
+                        displaySuffix = ` <span class="text-indigo-600 font-bold tracking-widest">${h.footnote}</span>`;
+                        h.footnote.split(' ').forEach(f => {
+                            if (f.trim()) activeFootnotes.add(f.trim());
+                        });
+                    }
+
+                    const card = document.createElement('div');
+                    card.className = `card flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border-l-4 ${borderClass} mb-3 fade-in`;
+                    card.innerHTML = `
+                        <div class="flex items-center w-full">
+                            <div class="flex flex-col items-center justify-center w-14 h-14 rounded-xl mr-5 border flex-shrink-0 ${iconColor}">
+                                <span class="text-xl font-bold">${day}</span>
+                                <span class="text-[10px] uppercase font-bold tracking-wider">${monthName}</span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-lg leading-tight">
+                                    ${h.name}${displaySuffix} ${fastingBadge}
+                                </h3>
+                                <p class="text-sm text-gray-500 mt-1 font-medium">
+                                    ${dayName}, ${h.date.toLocaleDateString('de-DE')}
+                                    ${h.states ? `<span class="hidden sm:inline mx-1 text-gray-300">|</span> <span class="text-xs text-gray-400 font-normal">${h.states}</span>` : ''}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-3 sm:mt-0 sm:ml-4 flex-shrink-0 self-end sm:self-center">
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-medium ${typeClass}">${badgeText}</span>
+                        </div>
+                    `;
+                    this.container.appendChild(card);
+                });
+
+                // Render Footnotes
+                if (filteredHolidays.length > 0) {
+                    this.footnotesContainer.classList.remove('hidden');
+
+                    let notesHtml = '';
+                    if (activeFootnotes.size > 0) {
+                        notesHtml += `<h5 class="font-bold text-gray-800 mt-4 mb-2 text-xs uppercase tracking-wider">Besonderheiten bei regionalen Feiertagen</h5>`;
+                        [...activeFootnotes].sort().forEach(key => {
+                           if(footnoteDefinitions[key]) {
+                               notesHtml += `<p class="mb-1.5 leading-relaxed text-xs">${footnoteDefinitions[key]}</p>`;
+                           }
+                        });
+                    }
+
+                    // Full Disclaimer Layout
+                    this.footnotesContainer.innerHTML = `
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-3 flex items-center text-sm">
+                                    <svg class="w-4 h-4 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    Abkürzungen der Bundesländer
+                                </h4>
+                                <div class="text-xs text-gray-600 leading-6 bg-white bg-opacity-60 rounded-lg p-3 border border-blue-100">
+                                    <span class="font-bold text-gray-800">BW:</span> Baden-Württemberg,
+                                    <span class="font-bold text-gray-800">BY:</span> Bayern,
+                                    <span class="font-bold text-gray-800">BE:</span> Berlin,
+                                    <span class="font-bold text-gray-800">BB:</span> Brandenburg,
+                                    <span class="font-bold text-gray-800">HB:</span> Bremen,
+                                    <span class="font-bold text-gray-800">HH:</span> Hamburg,
+                                    <span class="font-bold text-gray-800">HE:</span> Hessen,
+                                    <span class="font-bold text-gray-800">MV:</span> Mecklenburg-Vorpommern,
+                                    <span class="font-bold text-gray-800">NI:</span> Niedersachsen,
+                                    <span class="font-bold text-gray-800">NW:</span> Nordrhein-Westfalen,
+                                    <span class="font-bold text-gray-800">RP:</span> Rheinland-Pfalz,
+                                    <span class="font-bold text-gray-800">SL:</span> Saarland,
+                                    <span class="font-bold text-gray-800">SN:</span> Sachsen,
+                                    <span class="font-bold text-gray-800">ST:</span> Sachsen-Anhalt,
+                                    <span class="font-bold text-gray-800">SH:</span> Schleswig-Holstein,
+                                    <span class="font-bold text-gray-800">TH:</span> Thüringen
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-3 text-sm">Wichtige Hinweise</h4>
+                                <div class="text-xs text-gray-600">
+                                    <p class="mb-3 italic">
+                                        Entscheidend bei gesetzlichen Feiertagen ist der Arbeitsort, nicht der Wohnort der Arbeitnehmer*innen.
+                                    </p>
+                                    ${notesHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    this.footnotesContainer.classList.add('hidden');
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new HolidayCalendar();
+        });
+    </script>
+</body>
+</html>
