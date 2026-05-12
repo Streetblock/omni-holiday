@@ -1,35 +1,45 @@
-# OmniHoliday
+﻿# OmniHoliday
 
-Holiday and observance domain library built on top of a calendar math core.
+Holiday and observance domain library built on top of a dedicated calendar-conversion engine.
 
 OmniHoliday adds:
 - legal classification (e.g. German legal config)
 - holiday providers (state/religious/cultural)
 - category and scope metadata (regional, legal, silent day, etc.)
 
+## Engine Dependency
+
+OmniHoliday uses **ChronosBridge** as its calendar-conversion engine:
+- Repository: [https://github.com/Streetblock/chronos-bridge.git](https://github.com/Streetblock/chronos-bridge.git)
+
+Current local integration mirrors the modular ChronosBridge source in `libs/chronos-bridge/src` and adapts it for browser-global compatibility.
+
 ## Scope
 
 This repository is the **domain layer**.
-Calendar conversion math should come from `chronos-bridge`.
+Calendar conversion math should come from ChronosBridge.
 
-## Current Project Layout
+## Project Layout
 
 ```text
 omni-holiday/
-├── omni-holiday.js
-├── app.js
 ├── index.html
-└── style.css
+├── app.js
+├── style.css
+├── src/
+│   └── omni-holiday.js
+└── libs/
+    ├── bootstrap.js
+    ├── chronos-bridge-adapter.js
+    └── chronos-bridge/
+        └── src/
 ```
 
-## Integration Direction
+## Demo (GitHub Pages)
 
-Planned setup:
-1. Publish/use `chronos-bridge` as dependency.
-2. Import conversion utilities into holiday providers.
-3. Keep legal/business rules isolated in this repo.
+The root `index.html` is the demo entrypoint so GitHub Pages can serve it directly.
 
-## Local Dev (planned)
+## Local Dev
 
 For parallel local development with separate repos:
 
