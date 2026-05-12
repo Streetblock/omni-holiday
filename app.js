@@ -1,4 +1,4 @@
-﻿// Lokaler Provider fÃ¼r Korschenbroich (Bleibt erhalten)
+﻿// Lokaler Provider für Korschenbroich (Bleibt erhalten)
         class KorschenbroichProvider {
             constructor(year) {
                 this.year = year;
@@ -13,7 +13,7 @@
                         category: 'Lokal (Korschenbroich)', // New property name compatible
                         isLegal: false,
                         isSilent: false,
-                        description: 'Traditionelles SchÃ¼tzenfest in Korschenbroich'
+                        description: 'Traditionelles Schützenfest in Korschenbroich'
                     }
                 ];
             }
@@ -108,7 +108,7 @@
                     if (this.filterProt.checked && (category === 'Christlich' && (isGeneralChristian || isProtestantSpecific))) categoryActive = true;
                     
                     if (this.filterOrth.checked && category.includes('Orthodox')) categoryActive = true;
-                    if (this.filterJew.checked && category.includes('JÃ¼disch')) categoryActive = true;
+                    if (this.filterJew.checked && category.includes('Jüdisch')) categoryActive = true;
                     if (this.filterIslam.checked && category.includes('Islamisch')) categoryActive = true;
                     if (this.filterIranian.checked && category.includes('Iranisch')) categoryActive = true;
                     if (this.filterCult.checked && (category.includes('Kulturell') || category.includes('Lokal') || category === 'Staatlich' && !h.isLegal)) categoryActive = true;
@@ -147,12 +147,12 @@
                 this.emptyState.classList.add('hidden');
 
                 const dayNames = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-                const monthNames = ["Jan", "Feb", "MÃ¤r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
+                const monthNames = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
                 let activeFootnotes = new Set();
                 const footnoteDefinitions = {
-                    '*': '<strong>*In Sachsen:</strong> Nur in bestimmten katholisch geprÃ¤gten Gemeinden des sorbischen Siedlungsgebietes.',
-                    '**': '<strong>**In ThÃ¼ringen:</strong> Nur in bestimmten Gemeinden im Landkreis Eichsfeld sowie Teilen des Unstrut-Hainich-Kreises und des Wartburgkreises.',
-                    '***': '<strong>***In Bayern:</strong> Nur in Gemeinden mit Ã¼berwiegend katholischer BevÃ¶lkerung.'
+                    '*': '<strong>*In Sachsen:</strong> Nur in bestimmten katholisch geprägten Gemeinden des sorbischen Siedlungsgebietes.',
+                    '**': '<strong>**In Thüringen:</strong> Nur in bestimmten Gemeinden im Landkreis Eichsfeld sowie Teilen des Unstrut-Hainich-Kreises und des Wartburgkreises.',
+                    '***': '<strong>***In Bayern:</strong> Nur in Gemeinden mit überwiegend katholischer Bevölkerung.'
                 };
 
                 filteredHolidays.forEach(h => {
@@ -176,7 +176,7 @@
                         borderClass = "border-indigo-500";
                         typeClass = "bg-indigo-50 text-indigo-700 font-medium";
                         iconColor = "bg-indigo-50 text-indigo-600 border-indigo-100";
-                    } else if (cat.includes('JÃ¼disch')) {
+                    } else if (cat.includes('Jüdisch')) {
                         typeClass = "bg-purple-50 text-purple-700";
                         iconColor = "bg-purple-50 text-purple-600 border-purple-100";
                     } else if (cat.includes('Islamisch')) {
@@ -253,10 +253,10 @@
                             <div>
                                 <h4 class="font-bold text-gray-900 mb-3 flex items-center text-sm">
                                     <svg class="w-4 h-4 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    AbkÃ¼rzungen der BundeslÃ¤nder
+                                    Abkürzungen der Bundesländer
                                 </h4>
                                 <div class="text-xs text-gray-600 leading-6 bg-white bg-opacity-60 rounded-lg p-3 border border-blue-100">
-                                    <span class="font-bold text-gray-800">BW:</span> Baden-WÃ¼rttemberg,
+                                    <span class="font-bold text-gray-800">BW:</span> Baden-Württemberg,
                                     <span class="font-bold text-gray-800">BY:</span> Bayern,
                                     <span class="font-bold text-gray-800">BE:</span> Berlin,
                                     <span class="font-bold text-gray-800">BB:</span> Brandenburg,
@@ -271,7 +271,7 @@
                                     <span class="font-bold text-gray-800">SN:</span> Sachsen,
                                     <span class="font-bold text-gray-800">ST:</span> Sachsen-Anhalt,
                                     <span class="font-bold text-gray-800">SH:</span> Schleswig-Holstein,
-                                    <span class="font-bold text-gray-800">TH:</span> ThÃ¼ringen
+                                    <span class="font-bold text-gray-800">TH:</span> Thüringen
                                 </div>
                             </div>
 

@@ -60,28 +60,28 @@ const GERMAN_LEGAL_CONFIG = {
         'totensonntag': { isLegal: false, scope: 'Gedenktag', isSilent: true, isTradingHoliday: false },
         'silvester': { isLegal: false, scope: 'Jahreswechsel / Bankfeiertag', isSilent: false, isTradingHoliday: true },
 
-        // --- JÃ¼dische Feiertage (Gesetzlich geschÃ¼tzt) ---
-        // Diese Tage sind i.d.R. keine arbeitsfreien Feiertage fÃ¼r alle, genieÃŸen aber Schutz (Freistellung/LÃ¤rmschutz).
-        'rosch_ha_schana_1': { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false },
-        'rosch_ha_schana_2': { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false },
-        'jom_kippur':        { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false },
+        // --- Jüdische Feiertage (Gesetzlich geschützt) ---
+        // Diese Tage sind i.d.R. keine arbeitsfreien Feiertage für alle, genießen aber Schutz (Freistellung/Lärmschutz).
+        'rosch_ha_schana_1': { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'rosch_ha_schana_2': { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'jom_kippur':        { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
         
-        'sukkot_1':          { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false },
-        'sukkot_2':          { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false },
-        'schemini_azeret':   { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false }, // Sukkot Ende 1
-        'simchat_tora':      { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false }, // Sukkot Ende 2
+        'sukkot_1':          { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'sukkot_2':          { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'schemini_azeret':   { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false }, // Sukkot Ende 1
+        'simchat_tora':      { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false }, // Sukkot Ende 2
         
-        'pessach_1':         { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false },
-        'pessach_2':         { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false },
-        'pessach_7':         { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false },
-        'pessach_8':         { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false },
+        'pessach_1':         { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'pessach_2':         { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'pessach_7':         { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'pessach_8':         { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
         
-        'schawuot_1':        { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false },
-        'schawuot_2':        { isLegal: false, scope: 'Gesetzlich geschÃ¼tzt (JÃ¼disch)', isSilent: true, isTradingHoliday: false },
+        'schawuot_1':        { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
+        'schawuot_2':        { isLegal: false, scope: 'Gesetzlich geschützt (Jüdisch)', isSilent: true, isTradingHoliday: false },
 
 
         // --- Fallback ---
-        'DEFAULT': { isLegal: false, scope: 'Sonstige / ReligiÃ¶s', states: '', isSilent: false, isTradingHoliday: false }
+        'DEFAULT': { isLegal: false, scope: 'Sonstige / Religiös', states: '', isSilent: false, isTradingHoliday: false }
     };
 const { Utils: CalendarUtils, Hebrew: HebrewCalendarSystem, Islamic: IslamicCalendarSystem, Persian: PersianCalendarSystem } = window.ChronosBridge;
 class BaseProvider { constructor(year) { this.year = year; } getHolidays() { return []; } }
@@ -122,9 +122,9 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
         getHolidays() {
             const easter = CalendarUtils.getWesternEaster(this.year);
             return [
-                { name: 'Heilige Drei KÃ¶nige', date: new Date(Date.UTC(this.year, 0, 6)), key: 'heilige_drei_koenige', category: 'Christlich' },
+                { name: 'Heilige Drei Könige', date: new Date(Date.UTC(this.year, 0, 6)), key: 'heilige_drei_koenige', category: 'Christlich' },
                 { name: 'Fronleichnam', date: CalendarUtils.addDays(easter, 60), key: 'fronleichnam', category: 'Christlich' },
-                { name: 'MariÃ¤ Himmelfahrt', date: new Date(Date.UTC(this.year, 7, 15)), key: 'mariae_himmelfahrt', category: 'Christlich' },
+                { name: 'Mariä Himmelfahrt', date: new Date(Date.UTC(this.year, 7, 15)), key: 'mariae_himmelfahrt', category: 'Christlich' },
                 { name: 'Allerheiligen', date: new Date(Date.UTC(this.year, 10, 1)), key: 'allerheiligen', category: 'Christlich' },
             ];
         }
@@ -138,7 +138,7 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
             return [
                 { name: 'Reformationstag', date: new Date(Date.UTC(this.year, 9, 31)), key: 'reformationstag', category: 'Christlich' },
                 { name: 'Volkstrauertag', date: CalendarUtils.addDays(bussTag, -4), key: 'volkstrauertag', category: 'Staatlich' },
-                { name: 'BuÃŸ- und Bettag', date: bussTag, key: 'buss_und_bettag', category: 'Christlich' },
+                { name: 'Buß- und Bettag', date: bussTag, key: 'buss_und_bettag', category: 'Christlich' },
                 { name: 'Totensonntag', date: CalendarUtils.addDays(bussTag, 4), key: 'totensonntag', category: 'Christlich' }
              ];
         }
@@ -158,13 +158,13 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
 
     class JewishProvider extends BaseProvider {
         getHolidays() {
-            // Gesetzlich geschÃ¼tzte Tage in DE:
+            // Gesetzlich geschützte Tage in DE:
             // Pessach (1., 2. und 7., 8. Tag)
             // Wochenfest/Schawuot (2 Tage)
-            // LaubhÃ¼ttenfest/Sukkot (1., 2. Tag)
+            // Laubhüttenfest/Sukkot (1., 2. Tag)
             // Schlussfest/Schemini Azeret & Simchat Tora (die "letzten zwei" von Sukkot)
             // Neujahr/Rosch Haschana (2 Tage)
-            // VersÃ¶hnungstag/Jom Kippur (1 Tag)
+            // Versöhnungstag/Jom Kippur (1 Tag)
 
             const configs = [
                 // Pessach (1. Monat Nissan)
@@ -184,7 +184,7 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
                 // Jom Kippur
                 { name: 'Jom Kippur', month: 7, day: 10, key: 'jom_kippur', isFasting: true, fastingLevel: 1 },
 
-                // Sukkot / LaubhÃ¼ttenfest (7. Monat Tischri)
+                // Sukkot / Laubhüttenfest (7. Monat Tischri)
                 { name: 'Sukkot (1. Tag)', month: 7, day: 15, key: 'sukkot_1' },
                 { name: 'Sukkot (2. Tag)', month: 7, day: 16, key: 'sukkot_2' },
 
@@ -192,7 +192,7 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
                 { name: 'Schemini Azeret', month: 7, day: 22, key: 'schemini_azeret' },
                 { name: 'Simchat Tora', month: 7, day: 23, key: 'simchat_tora' },
 
-                // Weitere (ReligiÃ¶s, aber oft nicht explizit im Gesetzestext, aber Tradition)
+                // Weitere (Religiös, aber oft nicht explizit im Gesetzestext, aber Tradition)
                 { name: 'Chanukka (1. Tag)', month: 9, day: 25, key: 'chanukka' },
                 { name: 'Fasten Esther', month: 12, day: 13, key: 'fasten_esther', isFasting: true, fastingLevel: 2 },
                 { name: '17. Tammuz (Fasten)', month: 4, day: 17, key: '17_tammuz', isFasting: true, fastingLevel: 2 },
@@ -202,7 +202,7 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
             return configs.map(c => {
                 let hYear = this.year + 3760;
                 let date = HebrewCalendarSystem.convertToGregorian(hYear, c.month, c.day);
-                // Korrektur, falls das hebrÃ¤ische Datum in ein anderes gregorianisches Jahr fÃ¤llt
+                // Korrektur, falls das hebräische Datum in ein anderes gregorianisches Jahr fällt
                 if (date.getUTCFullYear() < this.year || (date.getUTCFullYear() === this.year && date.getUTCMonth() > 8 && c.month < 7)) {
                     hYear++; date = HebrewCalendarSystem.convertToGregorian(hYear, c.month, c.day);
                 } else if (date.getUTCFullYear() > this.year && c.month > 6) {
@@ -210,12 +210,12 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
                 }
                 // Verschiebung von Fastentagen, wenn sie auf Sabbat fallen (Ausnahme Jom Kippur)
                 if (['tisha_b_av', '17_tammuz', 'fasten_gedalja', 'fasten_esther'].includes(c.key) && date.getUTCDay() === 6) {
-                     // Esther wird vorverlegt, andere nach hinten (vereinfacht, hier meist +1, Esther mÃ¼sste eigentlich -2 wenn Sabbat)
-                     // Um die Lib einfach zu halten, lassen wir die simple Verschiebung fÃ¼r Minor Fasts
+                     // Esther wird vorverlegt, andere nach hinten (vereinfacht, hier meist +1, Esther müsste eigentlich -2 wenn Sabbat)
+                     // Um die Lib einfach zu halten, lassen wir die simple Verschiebung für Minor Fasts
                      date = CalendarUtils.addDays(date, 1); 
                 }
 
-                return { name: c.name, date: date, key: c.key, category: 'JÃ¼disch', isFasting: !!c.isFasting, fastingLevel: c.fastingLevel || 0 };
+                return { name: c.name, date: date, key: c.key, category: 'Jüdisch', isFasting: !!c.isFasting, fastingLevel: c.fastingLevel || 0 };
             });
         }
     }
@@ -241,7 +241,7 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
     class IranianProvider extends BaseProvider {
         getHolidays() {
             const configs = [
-                // FrÃ¼hlingsfeste
+                // Frühlingsfeste
                 { name: 'Nowruz (Persisches Neujahr)', month: 1, day: 1, key: 'nowruz', category: 'Iranisch' },
                 { name: 'Sizdah Bedar (Tag der Natur)', month: 1, day: 13, key: 'sizdah_bedar', category: 'Iranisch' },
             
@@ -258,7 +258,7 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
 
             const holidays = [];
    
-            // Standard-Daten hinzufÃ¼gen
+            // Standard-Daten hinzufügen
             configs.forEach(c => {
                 const date = PersianCalendarSystem.findDateInGregorianYear(this.year, c.month, c.day);
                 if (date) {
@@ -282,7 +282,7 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
                 let daysToLastWednesday = (dayOfWeekNowruz - 3 + 7) % 7;
                 if (daysToLastWednesday === 0) daysToLastWednesday = 7;
 
-                // 3. Gehe vom letzten Mittwoch einen weiteren Tag zurÃ¼ck auf den Dienstag
+                // 3. Gehe vom letzten Mittwoch einen weiteren Tag zurück auf den Dienstag
                 const suriDate = CalendarUtils.addDays(nowruzDate, -(daysToLastWednesday + 1));
 
                 holidays.push({
@@ -321,7 +321,7 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
             let key = rawHoliday.key;
             if (!key) {
                  key = rawHoliday.name.toLowerCase()
-                    .replace(/Ã¤/g, 'ae').replace(/Ã¶/g, 'oe').replace(/Ã¼/g, 'ue').replace(/ÃŸ/g, 'ss')
+                    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
                     .replace(/[^a-z0-9]/g, '_');
             }
 
@@ -363,5 +363,6 @@ class BaseProvider { constructor(year) { this.year = year; } getHolidays() { ret
         static get Islamic() { return IslamicCalendarSystem; }
     }
     
-    // Global verfÃ¼gbar machen
+    // Global verfügbar machen
     window.UniversalHolidayLib = UniversalHolidayLib;
+
